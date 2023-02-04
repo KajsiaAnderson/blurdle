@@ -94,11 +94,13 @@ export default function Submit() {
                 options={top100Films}
                 value={value}
                 onChange={(event, value) => setValue(value)}
-                clearOnBlur={true}
+                ListboxProps={{
+                    className: "myCustomList"
+                }}
                 PaperComponent={({ children }) => (
-                    <Paper style={{ background: "#444", color: "white" }}>{children}</Paper>
+                    <Paper style={{ background: "#212121", color: "white", border: "solid gray" }}>{children}</Paper>
                 )}
-                sx={{ width: 640 }}
+                sx={{ width: 'auto' }}
                 renderInput={(params) => <TextField
                     className='textField'
                     // onKeyDown={(e) => handleEnter(e)}
