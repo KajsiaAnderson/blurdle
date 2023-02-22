@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { styled } from "@mui/material/styles";
@@ -47,8 +47,34 @@ export default function Submit() {
     const { board, setBoard, currAttempt, setCurrAttempt, correctMovie } = useContext(AppContext)
 
     const [value, setValue] = useState(null);
+    const [gameState, setGameState] = useState('playing') //won, lost, playing
 
     // const handleEnter = (e) => { if (e.key === 'Enter') { console.log(e.target.value); } }
+
+    useEffect(() => {
+        if (currAttempt.attempt > 0) {
+            checkGameState()
+        }
+    }, [currAttempt])
+
+    const checkGameState = () => {
+        if (checkIfWon()) {
+            alert('you won')
+            setGameState('won')
+        } else if (checkIfLost()) {
+            alert('sorry, try again tomorrow')
+            setGameState('lost')
+        }
+    }
+
+    const checkIfWon = () => {
+        return (board[currAttempt.attempt - 1] === correctMovie)
+    }
+
+    const checkIfLost = () => {
+        return (currAttempt.attempt === 6)
+    }
+
 
     const handleSubmit = (event, stateVal) => {
         event.preventDefault();
@@ -58,6 +84,7 @@ export default function Submit() {
 
         if (currAttempt.attempt > 5) return;
         if (stateVal.label === '') return;
+        if (gameState !== 'playing') return;
 
         const newBoard = [...board]
         newBoard[currAttempt.attempt] = stateVal.label
@@ -68,16 +95,12 @@ export default function Submit() {
         setCurrAttempt({ ...currAttempt, attempt: currAttempt.attempt + 1 })
         console.log('newBoard', newBoard)
         setValue(null)
-
-
-        if (newBoard[currAttempt.attempt] === correctMovie) {
-            alert('you won')
-        }
     };
 
     const skipHandler = (e) => {
         e.preventDefault()
         if (currAttempt.attempt > 5) return;
+        if (gameState !== 'playing') return;
 
         const newBoard = [...board]
         newBoard[currAttempt.attempt] = 'skipped'
