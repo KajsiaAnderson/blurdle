@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button"
 import { AppContext } from '../App'
 import { top100Films } from '../moviesList';
+import EndScreen from './EndScreen';
 
 
 const StyledAutocomplete = styled(Autocomplete)({
@@ -59,10 +60,10 @@ export default function Submit() {
 
     const checkGameState = () => {
         if (checkIfWon()) {
-            alert('you won')
+            // alert('you won')
             setGameState('won')
         } else if (checkIfLost()) {
-            alert('sorry, try again tomorrow')
+            // alert('sorry, try again tomorrow')
             setGameState('lost')
         }
     }
@@ -108,6 +109,10 @@ export default function Submit() {
         setCurrAttempt({ ...currAttempt, attempt: currAttempt.attempt + 1 })
         console.log('skipBoard', newBoard)
         setValue(null)
+    }
+
+    if (gameState !== 'playing') {
+        return (<EndScreen won={gameState === 'won'} />)
     }
 
     return (
