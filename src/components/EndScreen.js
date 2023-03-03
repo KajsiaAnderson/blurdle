@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 const Number = ({number, label}) => (
     <div>
@@ -35,9 +35,64 @@ const GuessDistribution = () => {
     )
 }
 
-const EndScreen = ({ won = false }) => {
-    const share = () => {
+const EndScreen = ({ won = false, board }) => {
+    const[secondsTilTomorrow, setSecondsTilTomorrow] = useState(0)
+    const [played, setPlayed] = useState(0)
+    const [winRate, setWinRate] = useState(0)
+    const [curStreak, setCurStreak] = useState(0)
+    const [maxStreak, setMaxStreak] = useState(0)
 
+    //! useEffect(() => {
+    //     readState()
+    // }, [])
+
+    const share = () => {
+        // const textMap = board.map((row, i) =>
+        // row.map((cell, j) => colorsToEmoji[getCellBGColor(i, j)]).join(""))
+        // .filter((row) => row)
+        // .join("\n")
+        // const textToShare = `Blurdle \n${textMap}`
+        // Clipboard.setString(textToShare)
+        // alert("Copied successfully", "Share your score on your social media")
+    }
+
+    useEffect(() => {
+        const updateTime = () => {
+            const now = new Date()
+            const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+
+            setSecondsTilTomorrow((tomorrow - now) / 1000)
+        }
+
+        const interval = setInterval(updateTime, 1000)
+        return () => clearInterval(interval)
+    }, [])
+
+    //! const readState = () => {
+    //     const dataString = localStorage.getItem('game')
+    //     let data;
+    //     try {
+    //         data = JSON.parse(dataString)
+    //     } catch (e) {
+    //         console.log('error')
+    //     }
+    //     const keys = Object.keys(data)
+    //     const values = Object.values(data)
+    //     console.log('keys', keys)
+    //     console.log('data', data)
+    //     console.log('values', values)
+
+    //     setPlayed(keys.length)
+
+    //     const numberOfWins = values.filter(game => game.gameState === 'won').length
+    //     setWinRate(Math.floor(100 * numberOfWins / keys.length))
+    // }
+
+    const formatSeconds = () => {
+        const hours = Math.floor(secondsTilTomorrow / (60 * 60)).toString().padStart(2, '0')
+        const minutes = Math.floor(secondsTilTomorrow % (60 * 60) / 60).toString().padStart(2, '0')
+        const seconds = Math.floor(secondsTilTomorrow % 60).toString().padStart(2, '0')
+        return `${hours}:${minutes}:${seconds}`
     }
 
     return (
@@ -49,18 +104,18 @@ const EndScreen = ({ won = false }) => {
                 STATISTICS
             </div>
             <div className='stat-numbers'>
-                <Number number={2} label={"Played"} />
-                <Number number={2} label={"Win %"} />
-                <Number number={2} label={"Current Streak"} />
-                <Number number={2} label={"Max Streak"} />
+                <Number number={played} label={"Played"} />
+                <Number number={winRate} label={"Win %"} />
+                <Number number={curStreak} label={"Current Streak"} />
+                <Number number={maxStreak} label={"Max Streak"} />
             </div>
             <GuessDistribution />
-            <div>
+            <div className='next-game'>
                 <div>
                     <div>Next Blurdle</div>
-                    <div>10:35:00</div>
+                    <div className='time'>{formatSeconds()}</div>
                 </div>
-                <button onClick={share}>Share</button>
+                <button className='share-btn' onClick={share}>Share</button>
             </div>
         </div>
     )
