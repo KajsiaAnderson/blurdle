@@ -17,7 +17,8 @@ const GuessDistributionBox = ({ position, amount, percentage }) => {
                     marginBottom: 5,
                     backgroundColor: 'gray',
                     width: `${percentage}%`,
-                    minWidth: 10
+                    minWidth: 10,
+                    textAlign: 'end'
                 }
             }>{amount}</div>
         </div>

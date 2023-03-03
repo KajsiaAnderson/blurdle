@@ -357,3 +357,9 @@ input {
   transition: 0.3s;
   transform: scale(1.1, 1.1);
 }
+
+@media only screen and (max-width: 650px) {
+  .guess-distribution {
+      margin: 0 15%;
+  }
+}
