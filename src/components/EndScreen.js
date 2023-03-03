@@ -42,19 +42,9 @@ const EndScreen = ({ won = false, board }) => {
     const [curStreak, setCurStreak] = useState(0)
     const [maxStreak, setMaxStreak] = useState(0)
 
-    //! useEffect(() => {
-    //     readState()
-    // }, [])
-
-    const share = () => {
-        // const textMap = board.map((row, i) =>
-        // row.map((cell, j) => colorsToEmoji[getCellBGColor(i, j)]).join(""))
-        // .filter((row) => row)
-        // .join("\n")
-        // const textToShare = `Blurdle \n${textMap}`
-        // Clipboard.setString(textToShare)
-        // alert("Copied successfully", "Share your score on your social media")
-    }
+    useEffect(() => {
+        readState()
+    }, [])
 
     useEffect(() => {
         const updateTime = () => {
@@ -68,25 +58,32 @@ const EndScreen = ({ won = false, board }) => {
         return () => clearInterval(interval)
     }, [])
 
-    //! const readState = () => {
-    //     const dataString = localStorage.getItem('game')
-    //     let data;
-    //     try {
-    //         data = JSON.parse(dataString)
-    //     } catch (e) {
-    //         console.log('error')
-    //     }
-    //     const keys = Object.keys(data)
-    //     const values = Object.values(data)
-    //     console.log('keys', keys)
-    //     console.log('data', data)
-    //     console.log('values', values)
+    const share = () => {
+        // const textMap = board.map((row, i) =>
+        // row.map((cell, j) => colorsToEmoji[getCellBGColor(i, j)]).join(""))
+        // .filter((row) => row)
+        // .join("\n")
+        // const textToShare = `Blurdle \n${textMap}`
+        // Clipboard.setString(textToShare)
+        // alert("Copied successfully", "Share your score on your social media")
+    }
 
-    //     setPlayed(keys.length)
+    const readState = () => {
+        const dataString = localStorage.getItem('game')
+        let data;
+        try {
+            data = JSON.parse(dataString)
+        } catch (e) {
+            console.log('error')
+        }
+        const keys = Object.keys(data)
+        const values = Object.values(data)
 
-    //     const numberOfWins = values.filter(game => game.gameState === 'won').length
-    //     setWinRate(Math.floor(100 * numberOfWins / keys.length))
-    // }
+        setPlayed(keys.length)
+
+        const numberOfWins = values.filter(game => game.gameState === 'won').length
+        setWinRate(Math.floor(100 * numberOfWins / keys.length))
+    }
 
     const formatSeconds = () => {
         const hours = Math.floor(secondsTilTomorrow / (60 * 60)).toString().padStart(2, '0')
