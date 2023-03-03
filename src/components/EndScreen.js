@@ -1,46 +1,51 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
-const Number = ({number, label}) => (
+const Number = ({ number, label }) => (
     <div>
         <div className='number'>{number}</div>
         <div className='label'>{label}</div>
     </div>
 )
 
-const GuessDistributionBox = ({position, amount, percentage}) => {
+const GuessDistributionBox = ({ position, amount, percentage }) => {
     return (
         <div className='guess-distribution'>
             <div className='guess-position'>{position}</div>
             <div style={
-                {padding: 5,
-                marginBottom: 5,
-                backgroundColor: 'gray',
-                width: `${percentage}%`}
+                {
+                    padding: 5,
+                    marginBottom: 5,
+                    backgroundColor: 'gray',
+                    width: `${percentage}%`,
+                    minWidth: 10
+                }
             }>{amount}</div>
         </div>
     )
 }
 
-const GuessDistribution = () => {
+const GuessDistribution = ({distribution}) => {
+    if (!distribution) {
+        return null;
+    }
+    const sum = distribution.reduce((total, dist) => dist + total, 0)
     return (
         <div>
             <div className='distribution'>GUESS DISTRIBUTION</div>
-             <GuessDistributionBox position={1} amount={2} percentage={70} />
-             <GuessDistributionBox position={2} amount={2} percentage={50} />
-             <GuessDistributionBox position={3} amount={2} percentage={5} />
-             <GuessDistributionBox position={4} amount={2} percentage={0} />
-             <GuessDistributionBox position={5} amount={2} percentage={0} />
-             <GuessDistributionBox position={6} amount={2} percentage={0} />
+            {distribution.map((dist, index) => (
+                <GuessDistributionBox position={index + 1} amount={dist} percentage={dist / sum * 100} />
+            ))}
         </div>
     )
 }
 
 const EndScreen = ({ won = false, board }) => {
-    const[secondsTilTomorrow, setSecondsTilTomorrow] = useState(0)
+    const [secondsTilTomorrow, setSecondsTilTomorrow] = useState(0)
     const [played, setPlayed] = useState(0)
     const [winRate, setWinRate] = useState(0)
     const [curStreak, setCurStreak] = useState(0)
     const [maxStreak, setMaxStreak] = useState(0)
+    const [distribution, setDistribution] = useState(null)
 
     useEffect(() => {
         readState()
@@ -83,6 +88,40 @@ const EndScreen = ({ won = false, board }) => {
 
         const numberOfWins = values.filter(game => game.gameState === 'won').length
         setWinRate(Math.floor(100 * numberOfWins / keys.length))
+
+        let curStreak = 0
+        let maxStreak = 0
+        let prevDay = 0
+        keys.forEach(key => {
+            const day = parseInt(key.split('-')[1])
+            if (data[key].gameState === 'won' && curStreak === 0) {
+                curStreak += 1
+            } else if (data[key].gameState === 'won' && prevDay + 1 === day) {
+                curStreak += 1
+            } else {
+                curStreak = data[key].gameState === 'won' ? 1 : 0
+            }
+
+            if (curStreak > maxStreak) {
+                maxStreak = curStreak
+            }
+
+            prevDay = day
+        })
+        setCurStreak(curStreak)
+        setMaxStreak(maxStreak)
+
+
+        const dist = [0, 0, 0, 0, 0, 0]
+
+        values.map(game => {
+            if (game.gameState === 'won') {
+                // const tries = game.board.filter((board) => board[0]).length
+                const tries = game.currAttempt.attempt - 1
+                dist[tries] = dist[tries] + 1
+            }
+        })
+        setDistribution(dist)
     }
 
     const formatSeconds = () => {
@@ -106,7 +145,7 @@ const EndScreen = ({ won = false, board }) => {
                 <Number number={curStreak} label={"Current Streak"} />
                 <Number number={maxStreak} label={"Max Streak"} />
             </div>
-            <GuessDistribution />
+            <GuessDistribution distribution={distribution} />
             <div className='next-game'>
                 <div>
                     <div>Next Blurdle</div>
