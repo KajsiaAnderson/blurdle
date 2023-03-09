@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { colorsToEmoji } from '../colors'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Number = ({ number, label }) => (
     <div>
@@ -34,19 +36,21 @@ const GuessDistribution = ({distribution}) => {
         <div>
             <div className='distribution'>GUESS DISTRIBUTION</div>
             {distribution.map((dist, index) => (
-                <GuessDistributionBox position={index + 1} amount={dist} percentage={dist / sum * 100} />
+                <GuessDistributionBox key={index} position={index + 1} amount={dist} percentage={dist / sum * 100} />
             ))}
         </div>
     )
 }
 
-const EndScreen = ({ won = false, board }) => {
+const EndScreen = ({ won = false, board, correctMovie }) => {
     const [secondsTilTomorrow, setSecondsTilTomorrow] = useState(0)
     const [played, setPlayed] = useState(0)
     const [winRate, setWinRate] = useState(0)
     const [curStreak, setCurStreak] = useState(0)
     const [maxStreak, setMaxStreak] = useState(0)
     const [distribution, setDistribution] = useState(null)
+    const [copied, setCopied] = useState(false)
+
 
     useEffect(() => {
         readState()
@@ -64,15 +68,29 @@ const EndScreen = ({ won = false, board }) => {
         return () => clearInterval(interval)
     }, [])
 
-    const share = () => {
-        // const textMap = board.map((row, i) =>
-        // row.map((cell, j) => colorsToEmoji[getCellBGColor(i, j)]).join(""))
-        // .filter((row) => row)
-        // .join("\n")
-        // const textToShare = `Blurdle \n${textMap}`
-        // Clipboard.setString(textToShare)
-        // alert("Copied successfully", "Share your score on your social media")
-    }
+
+    const onCopy = useCallback(() => {
+        setCopied(true);
+    }, [])
+
+    useEffect(() => {
+        if(copied === true){
+            const timer = setTimeout(() => {
+                setCopied(false)
+            }, 2000);
+
+            return () => {
+                clearTimeout(timer)
+            };
+        }
+    }, [copied])
+
+    const shareBoard = board.map((item) =>
+        colorsToEmoji[item === correctMovie ? "#528d4e" : "#444"]).join('')
+        // item === correctMovie ? "#528d4e" : item === 'skipped' ? "#444" : item !== "" && !correctMovie ? "#d20000b5" : "#D3D3D4")
+
+    const textToShare = `Blurdle \n${shareBoard}`
+
 
     const readState = () => {
         const dataString = localStorage.getItem('game')
@@ -115,9 +133,8 @@ const EndScreen = ({ won = false, board }) => {
 
         const dist = [0, 0, 0, 0, 0, 0]
 
-        values.map(game => {
+        values.forEach((game) => {
             if (game.gameState === 'won') {
-                // const tries = game.board.filter((board) => board[0]).length
                 const tries = game.currAttempt.attempt - 1
                 dist[tries] = dist[tries] + 1
             }
@@ -133,7 +150,7 @@ const EndScreen = ({ won = false, board }) => {
     }
 
     return (
-        <div>
+        <div className='overlay-endscreen'>
             <div className='completed'>
                 {won ? "You won!" : "Sorry, try again tomorrow."}
             </div>
@@ -152,8 +169,13 @@ const EndScreen = ({ won = false, board }) => {
                     <div>Next Blurdle</div>
                     <div className='time'>{formatSeconds()}</div>
                 </div>
-                <button className='share-btn' onClick={share}>Share</button>
+                <CopyToClipboard onCopy={onCopy} text={textToShare}>
+                    <button className='share-btn'>Share</button>
+                </CopyToClipboard>
             </div>
+            <div className="copied">
+                {copied ? <span>Copied to clipboard!</span> : null}
+             </div>
         </div>
     )
 }

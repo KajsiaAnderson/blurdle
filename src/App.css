@@ -381,6 +381,12 @@ input {
   transform: scale(1.1, 1.1);
 }
 
+.copied{
+  color: #888888;
+  text-align: center;
+  font-family: "Noto Sans", sans-serif;
+}
+
 @media only screen and (max-width: 650px) {
   .guess-distribution {
       margin: 0 15%;
