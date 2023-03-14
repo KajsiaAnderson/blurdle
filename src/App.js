@@ -13,6 +13,7 @@ function App() {
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0 });
   const [movieSet, setMovieSet] = useState(new Set())
   const [correctMovie, setCorrectMovie] = useState("");
+  const [gameState, setGameState] = useState('playing') //won, lost, playing
 
   useEffect(() => {
     generateMovieSet().then((movies) => {
@@ -26,7 +27,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <AppContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt, movieSet, setMovieSet, correctMovie}}>
+      <AppContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt, movieSet, setMovieSet, correctMovie, gameState, setGameState }}>
         <List />
         <Submit />
       </AppContext.Provider>

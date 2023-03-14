@@ -45,10 +45,9 @@ const StyledAutocomplete = styled(Autocomplete)({
 
 
 export default function Submit() {
-    const { board, setBoard, currAttempt, setCurrAttempt, correctMovie } = useContext(AppContext)
+    const { board, setBoard, currAttempt, setCurrAttempt, correctMovie, gameState, setGameState } = useContext(AppContext)
 
     const [value, setValue] = useState(null);
-    const [gameState, setGameState] = useState('playing') //won, lost, playing
 
     // const handleEnter = (e) => { if (e.key === 'Enter') { console.log(e.target.value); } }
 
@@ -59,22 +58,36 @@ export default function Submit() {
     }, [currAttempt])
 
     const checkGameState = () => {
-        if (checkIfWon()) {
-            // alert('you won')
-            setGameState('won')
-        } else if (checkIfLost()) {
-            // alert('sorry, try again tomorrow')
-            setGameState('lost')
+        // if (checkIfWon()) {
+        //     // alert('you won')
+        //     setGameState('won')
+        // } else {
+        // // } else if (checkIfLost()) {
+        //     // alert('sorry, try again tomorrow')
+        //     setGameState('lost')
+        // }
+        const find = board.find(el => el === correctMovie)
+        if(find === correctMovie){
+            return setGameState('won')
+        } else {
+            return setGameState('lost')
         }
     }
 
-    const checkIfWon = () => {
-        return (board[currAttempt.attempt - 1] === correctMovie)
-    }
+    // const checkIfWon = () => {
+    //     const find = board.find(el => el === correctMovie)
+    //     if(find === correctMovie){
+    //         return SetGameState('won')
+    //     } else {
+    //         return setGameState('lost')
+    //     }
+        // return console.log('find', findWin)
+        // return (board.find(el => el === correctMovie))
+    // }
 
-    const checkIfLost = () => {
-        return (currAttempt.attempt === 6)
-    }
+    // const checkIfLost = () => {
+    //     return (board.find(el => el !== correctMovie))
+    // }
 
 
     const handleSubmit = (event, stateVal) => {
@@ -112,7 +125,7 @@ export default function Submit() {
     }
 
     if (gameState !== 'playing') {
-        return (<EndScreen won={gameState === 'won'} />)
+        return <EndScreen won={gameState === 'won'} board={board} correctMovie={correctMovie} />
     }
 
     return (
