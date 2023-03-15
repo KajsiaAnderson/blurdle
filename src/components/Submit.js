@@ -58,36 +58,36 @@ export default function Submit() {
     }, [currAttempt])
 
     const checkGameState = () => {
-        // if (checkIfWon()) {
-        //     // alert('you won')
-        //     setGameState('won')
-        // } else {
-        // // } else if (checkIfLost()) {
-        //     // alert('sorry, try again tomorrow')
-        //     setGameState('lost')
-        // }
-        const find = board.find(el => el === correctMovie)
-        if(find === correctMovie){
-            return setGameState('won')
+        if (checkIfWon()) {
+            // alert('you won')
+            setGameState('won')
         } else {
-            return setGameState('lost')
+        // } else if (checkIfLost()) {
+            // alert('sorry, try again tomorrow')
+            setGameState('lost')
         }
+        // const find = board.find(el => el === correctMovie)
+        // if(find === correctMovie){
+        //     return setGameState('won')
+        // } else {
+        //     return setGameState('lost')
+        // }
     }
 
-    // const checkIfWon = () => {
-    //     const find = board.find(el => el === correctMovie)
-    //     if(find === correctMovie){
-    //         return SetGameState('won')
-    //     } else {
-    //         return setGameState('lost')
-    //     }
+    const checkIfWon = () => {
+        // const find = board.find(el => el === correctMovie)
+        // if(find === correctMovie){
+        //     return setGameState('won')
+        // } else {
+        //     return setGameState('lost')
+        // }
         // return console.log('find', findWin)
-        // return (board.find(el => el === correctMovie))
-    // }
+        return (board.find(el => el === correctMovie))
+    }
 
-    // const checkIfLost = () => {
-    //     return (board.find(el => el !== correctMovie))
-    // }
+    const checkIfLost = () => {
+        return (board.find(el => el !== correctMovie) && currAttempt.attempt === 6)
+    }
 
 
     const handleSubmit = (event, stateVal) => {
