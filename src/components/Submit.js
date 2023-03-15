@@ -58,11 +58,10 @@ export default function Submit() {
     }, [currAttempt])
 
     const checkGameState = () => {
-        if (checkIfWon()) {
+        if (checkIfWon() && gameState !== "won") {
             // alert('you won')
             setGameState('won')
-        } else {
-        // } else if (checkIfLost()) {
+        } else if (checkIfLost() && gameState !== "won") {
             // alert('sorry, try again tomorrow')
             setGameState('lost')
         }
@@ -75,14 +74,7 @@ export default function Submit() {
     }
 
     const checkIfWon = () => {
-        // const find = board.find(el => el === correctMovie)
-        // if(find === correctMovie){
-        //     return setGameState('won')
-        // } else {
-        //     return setGameState('lost')
-        // }
-        // return console.log('find', findWin)
-        return (board.find(el => el === correctMovie))
+        return (board[currAttempt.attempt - 1] === correctMovie)
     }
 
     const checkIfLost = () => {
