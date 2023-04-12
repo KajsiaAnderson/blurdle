@@ -6,7 +6,7 @@ import { Paper } from '@mui/material'
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button"
 import { AppContext } from '../App'
-import { top100Films } from '../moviesList';
+import { topRatedMovies } from '../moviesList';
 import EndScreen from './EndScreen';
 
 
@@ -86,14 +86,14 @@ export default function Submit() {
         event.preventDefault();
         console.log(event);
         console.log(stateVal);
-        console.log(stateVal.label);
+        // console.log(stateVal.label);
 
         if (currAttempt.attempt > 5) return;
-        if (stateVal.label === '') return;
+        if (stateVal === '') return;
         if (gameState !== 'playing') return;
 
         const newBoard = [...board]
-        newBoard[currAttempt.attempt] = stateVal.label
+        newBoard[currAttempt.attempt] = stateVal
         console.log('e', newBoard)
 
 
@@ -125,7 +125,7 @@ export default function Submit() {
             <StyledAutocomplete
                 disablePortal
                 id="combo-box-demo"
-                options={top100Films}
+                options={topRatedMovies}
                 value={value}
                 onChange={(event, value) => setValue(value)}
                 ListboxProps={{

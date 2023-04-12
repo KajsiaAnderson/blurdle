@@ -1,9 +1,10 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header';
 import List from './components/List';
 import Submit from './components/Submit';
-import { boardDefault, generateMovieSet } from './Movies';
+import { boardDefault, getDayOfTheYear } from './Movies';
+import axios from 'axios';
 
 
 export const AppContext = createContext();
@@ -11,23 +12,36 @@ export const AppContext = createContext();
 function App() {
   const [board, setBoard] = useState(boardDefault);
   const [currAttempt, setCurrAttempt] = useState({ attempt: 0 });
-  const [movieSet, setMovieSet] = useState(new Set())
+  const [movie, setMovie] = useState({})
   const [correctMovie, setCorrectMovie] = useState("");
   const [gameState, setGameState] = useState('playing') //won, lost, playing
 
-  useEffect(() => {
-    generateMovieSet().then((movies) => {
-      setMovieSet(movies.movieSet)
-      console.log(movies.movieSet)
-      setCorrectMovie(movies.todaysMovie);
-      console.log(movies.todaysMovie)
+
+
+  const randomMovieNumberRounded = Math.floor(getDayOfTheYear() / 20)
+  const randomMovie = Math.floor((getDayOfTheYear() / 20 - randomMovieNumberRounded) * 19)
+
+
+  const getData = useCallback(() => {
+    axios.get('/movies')
+    .then((res) => {
+      console.log('movie hmm', res.data.results[randomMovie])
+      // console.log('movie', res.data.results)
+      setMovie(res.data.results[randomMovie])
+      console.log('correct movie', res.data.results[randomMovie].original_title)
+      setCorrectMovie(res.data.results[randomMovie].original_title)
+    })
+    .catch(error => {
+      console.error('error', error);
     })
   }, [])
+
+  useEffect(() => {getData()}, [getData])
 
   return (
     <div className="App">
       <Header />
-      <AppContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt, movieSet, setMovieSet, correctMovie, gameState, setGameState }}>
+      <AppContext.Provider value={{board, setBoard, currAttempt, setCurrAttempt, correctMovie, gameState, setGameState, setMovie, movie }}>
         <List />
         <Submit />
       </AppContext.Provider>

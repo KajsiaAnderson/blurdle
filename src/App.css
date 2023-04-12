@@ -387,6 +387,25 @@ input {
   font-family: "Noto Sans", sans-serif;
 }
 
+.blurOne {
+  filter: blur(20px)
+}
+.blurTwo {
+  filter: blur(15px)
+}
+.blurThree {
+  filter: blur(10px)
+}
+.blurFour {
+  filter: blur(5px)
+}
+.blurFive {
+  filter: blur(3px)
+}
+.blurSix {
+  filter: blur(0px)
+}
+
 @media only screen and (max-width: 650px) {
   .guess-distribution {
       margin: 0 15%;

@@ -1,5 +1,3 @@
-import movieBank from "./movie-bank.txt";
-
 export const boardDefault = [
     [""],
     [""],
@@ -17,16 +15,3 @@ export const getDayOfTheYear = () => {
     const day = Math.floor(diff / oneDay)
     return day
 }
-
-export const generateMovieSet = async () => {
-    let movieSet;
-    let todaysMovie;
-    await fetch(movieBank)
-        .then((response) => response.text())
-        .then((result) => {
-            const movieArr = result.split("\n");
-            todaysMovie = movieArr[getDayOfTheYear()];
-            movieSet = new Set(movieArr);
-        });
-    return { movieSet, todaysMovie };
-};
