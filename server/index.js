@@ -35,4 +35,5 @@ app.get('/movies', async (req, res) => {
     }
 })
 
-app.listen(4000, () => console.log('Up on 4000'))
+// app.listen(4000, () => console.log('Up on 4000'))
+module.exports = app
