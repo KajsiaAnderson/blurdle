@@ -25,6 +25,9 @@ const List = () => {
     return (
         <div className='guess-list'>
             {" "}
+            <div className='img'>
+                <img src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt="movie scene" className={blur} />
+            </div>
             <div className='guess-box'>
                 <Guess attempt={0} />
             </div>
@@ -42,9 +45,6 @@ const List = () => {
             </div>
             <div className='guess-box'>
                 <Guess attempt={5} />
-            </div>
-            <div className='img'>
-                <img src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt="movie scene" className={blur} />
             </div>
         </div>
     )

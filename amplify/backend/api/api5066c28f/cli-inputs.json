@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/blurdle": {
+      "name": "/blurdle",
+      "lambdaFunction": "blurdle5b87a57c",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

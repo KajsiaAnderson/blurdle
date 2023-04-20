@@ -4,8 +4,9 @@ import Header from './components/Header';
 import List from './components/List';
 import Submit from './components/Submit';
 import { boardDefault, getDayOfTheYear } from './Movies';
-import axios from 'axios';
+import {API} from 'aws-amplify'
 
+const myAPI = "api5066c28f"
 
 export const AppContext = createContext();
 
@@ -23,13 +24,13 @@ function App() {
 
 
   const getData = useCallback(() => {
-    axios.get('/movies')
+    API.get(myAPI,'/blurdle')
     .then((res) => {
-      console.log('movie hmm', res.data.results[randomMovie])
-      // console.log('movie', res.data.results)
-      setMovie(res.data.results[randomMovie])
-      console.log('correct movie', res.data.results[randomMovie].original_title)
-      setCorrectMovie(res.data.results[randomMovie].original_title)
+      // console.log('movie array', res)
+      console.log('movie', res.results[randomMovie])
+      setMovie(res.results[randomMovie])
+      // console.log('correct movie', res.results[randomMovie].original_title)
+      setCorrectMovie(res.results[randomMovie].original_title)
     })
     .catch(error => {
       console.error('error', error);

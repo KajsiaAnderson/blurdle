@@ -1,0 +1,27 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-blurdle-dev-212618-authRole",
+      "UnauthRoleArn": "arn:aws:iam::936297379993:role/amplify-blurdle-dev-212618-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::936297379993:role/amplify-blurdle-dev-212618-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-blurdle-dev-212618-deployment",
+      "UnauthRoleName": "amplify-blurdle-dev-212618-unauthRole",
+      "StackName": "amplify-blurdle-dev-212618",
+      "StackId": "arn:aws:cloudformation:us-west-2:936297379993:stack/amplify-blurdle-dev-212618/ca175e50-dd98-11ed-80da-02cc3509a22d",
+      "AmplifyAppId": "d2av024thp68q"
+    },
+    "categories": {
+      "function": {
+        "blurdle5b87a57c": {
+          "deploymentBucketName": "amplify-blurdle-dev-212618-deployment",
+          "s3Key": "amplify-builds/blurdle5b87a57c-746c4b454b536b515056-build.zip",
+          "secretsPathAmplifyAppId": "d2av024thp68q"
+        }
+      },
+      "api": {
+        "api5066c28f": {}
+      }
+    }
+  }
+}

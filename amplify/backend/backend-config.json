@@ -1,0 +1,51 @@
+{
+  "api": {
+    "api5066c28f": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "blurdle5b87a57c"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
+  "function": {
+    "blurdle5b87a57c": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_blurdle5b87a57c_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "blurdle5b87a57c"
+        }
+      ]
+    },
+    "AMPLIFY_function_blurdle5b87a57c_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "blurdle5b87a57c"
+        }
+      ]
+    },
+    "AMPLIFY_function_blurdle5b87a57c_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "blurdle5b87a57c"
+        }
+      ]
+    }
+  }
+}
