@@ -4,8 +4,10 @@ import { FiBarChart2 } from 'react-icons/fi'
 import About from './modals/About'
 // import Stats from './modals/Stats'
 import HowToPlay from './modals/HowToPlay'
+import Me from './modals/Me'
 
 const Header = () => {
+    const [meModal, setMeModal] = useState(false)
     const [aboutModal, setAboutModal] = useState(false)
     const [statsModal, setStatsModal] = useState(false)
     const [howToPlayModal, setHowToPlayModal] = useState(false)
@@ -14,9 +16,10 @@ const Header = () => {
     return (
         <div className='header'>
             <nav>
-                <button className='headerBtn' >
+                <button className='headerBtn' onClick={() => setMeModal(true)}>
                     <AiOutlinePlayCircle size="1.5rem" color="#ffffff" />
                 </button>
+                <Me open={meModal} onClose={() => setMeModal(false)}/>
                 <button className='headerBtn' onClick={() => setAboutModal(true)}>
                     <AiOutlineInfoCircle size="1.5rem" color="#ffffff" />
                 </button>

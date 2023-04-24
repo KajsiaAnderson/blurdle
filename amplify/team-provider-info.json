@@ -15,7 +15,7 @@
       "function": {
         "blurdle5b87a57c": {
           "deploymentBucketName": "amplify-blurdle-dev-212618-deployment",
-          "s3Key": "amplify-builds/blurdle5b87a57c-746c4b454b536b515056-build.zip",
+          "s3Key": "amplify-builds/blurdle5b87a57c-37754d396f6969585048-build.zip",
           "secretsPathAmplifyAppId": "d2av024thp68q"
         }
       },

@@ -410,4 +410,22 @@ input {
   .guess-distribution {
       margin: 0 15%;
   }
+  .blurOne {
+    width: 300px
+  }
+  .blurTwo {
+    width: 300px
+  }
+  .blurThree {
+    width: 300px
+  }
+  .blurFour {
+    width: 300px
+  }
+  .blurFive {
+    width: 300px
+  }
+  .blurSix {
+    width: 300px
+  }
 }
