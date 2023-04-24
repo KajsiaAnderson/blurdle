@@ -1,3 +1,5 @@
 # Blurdle
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Blurdle is a gaming app. Guess the movie based on the blurred image.
+
+![blurdle home page](./images/blurImage.png)
