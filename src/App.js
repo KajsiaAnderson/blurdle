@@ -27,7 +27,7 @@ function App() {
     API.get(myAPI,'/blurdle')
     .then((res) => {
       // console.log('movie array', res)
-      console.log('movie', res.results[randomMovie])
+      // console.log('movie', res.results[randomMovie])
       setMovie(res.results[randomMovie])
       // console.log('correct movie', res.results[randomMovie].original_title)
       setCorrectMovie(res.results[randomMovie].original_title)
@@ -35,7 +35,7 @@ function App() {
     .catch(error => {
       console.error('error', error);
     })
-  }, [])
+  }, [randomMovie])
 
   useEffect(() => {getData()}, [getData])
 

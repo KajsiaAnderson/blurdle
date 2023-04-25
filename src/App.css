@@ -75,6 +75,7 @@ h1 {
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
+  pointer-events: none;
 }
 
 .guess-section {
