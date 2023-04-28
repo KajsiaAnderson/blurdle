@@ -35,7 +35,7 @@ const GuessDistribution = ({ distribution }) => {
     <div className='distribution-box'>
       <div className='distribution'>GUESS DISTRIBUTION</div>
       {distribution.map((dist, index) => (
-        <GuessDistributionBox key={index}position={index + 1} amount={dist} percentage={dist / sum * 100} />
+        <GuessDistributionBox key={index} position={index + 1} amount={dist} percentage={dist / sum * 100} />
       ))}
     </div>
   )

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { AiOutlineInfoCircle, AiOutlineQuestionCircle, AiOutlinePlayCircle } from 'react-icons/ai'
 import { FiBarChart2 } from 'react-icons/fi'
 import About from './modals/About'
-// import Stats from './modals/Stats'
+import Stats from './modals/Stats'
 import HowToPlay from './modals/HowToPlay'
 import Me from './modals/Me'
 
@@ -28,7 +28,7 @@ const Header = () => {
                 <button className='headerBtn' onClick={() => setStatsModal(true)}>
                     <FiBarChart2 size="1.5rem" color="#ffffff" />
                 </button>
-                {/* <Stats open={statsModal} onClose={() => setStatsModal(false)}/> */}
+                <Stats open={statsModal} onClose={() => setStatsModal(false)}/>
                 <button className='headerBtn' onClick={() => setHowToPlayModal(true)}>
                     <AiOutlineQuestionCircle size="1.5rem" color="#ffffff" />
                 </button>
