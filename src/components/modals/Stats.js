@@ -54,6 +54,7 @@ const Stats = ({ open, onClose }) => {
 
 
   const readState = () => {
+    if (localStorage.getItem('game') === null) return
     const dataString = localStorage.getItem('game')
     let data;
     try {
@@ -64,7 +65,8 @@ const Stats = ({ open, onClose }) => {
     const keys = Object.keys(data)
     const values = Object.values(data)
 
-    setPlayed(keys.length)
+    const playing = values.filter(game => game.gameState === 'playing').length
+    setPlayed(keys.length - playing)
 
     const numberOfWins = values.filter(game => game.gameState === 'won').length
     setWinRate(Math.floor(100 * numberOfWins / keys.length))

@@ -22,7 +22,7 @@ const Guess = ({ attempt }) => {
         if (loaded) {
             persistState()
         }
-    }, [board, currAttempt, gameState])
+    }, [board, currAttempt, gameState, loaded])
 
     useEffect(() => {
         readState()
