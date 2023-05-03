@@ -69,7 +69,7 @@ const Stats = ({ open, onClose }) => {
     setPlayed(keys.length - playing)
 
     const numberOfWins = values.filter(game => game.gameState === 'won').length
-    setWinRate(Math.floor(100 * numberOfWins / keys.length))
+    setWinRate(Math.floor(100 * numberOfWins / (keys.length - playing)))
 
     let curStreak = 0
     let maxStreak = 0
